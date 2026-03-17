@@ -1,5 +1,7 @@
 # League Simulator — Case Project
 
+Live Link: https://league-simulator-gs4s.onrender.com/
+
 This repository contains a **Laravel (PHP)** backend and a **Vue (Vite)** frontend that simulate a 4‑team league, week by week, with Premier League scoring rules and late-stage championship predictions.
 
 ## Project Structure
@@ -63,36 +65,3 @@ php artisan serve
 ```
 
 Open `http://127.0.0.1:8000` (Laravel serves the SPA; API remains under `/api`).
-
-## Deploy (Render)
-
-This repo includes a root `Dockerfile` that builds the Vue SPA and serves it from Laravel.
-
-1. Push the repository to GitHub.
-2. In Render, create a **New → Web Service** and pick your GitHub repo.
-3. Choose **Environment: Docker**.
-4. Add these environment variables:
-   - `APP_KEY` (generate locally with `cd backend && php artisan key:generate --show`)
-   - `APP_ENV=production`
-   - `APP_DEBUG=false`
-   - `APP_URL=<your Render service URL>` (optional but recommended)
-5. Deploy. The container auto-runs `php artisan migrate --seed` on startup and listens on Render’s `$PORT`.
-
-## API Endpoints (MVP)
-
-- `GET /api/teams`
-- `POST /api/fixtures/generate`
-- `GET /api/fixtures`
-- `GET /api/simulation/state`
-- `POST /api/simulation/play-next-week`
-- `POST /api/simulation/play-all-weeks`
-- `POST /api/simulation/reset`
-- `PATCH /api/matches/{id}` — update match result (`homeGoals`, `awayGoals`)
-
-## Tuning (Env)
-
-Backend `.env`:
-
-- `LEAGUE_MAX_GOALS_PER_TEAM` (default `20`)
-- `LEAGUE_PREDICTION_LAST_WEEKS` (default `3`)
-- `LEAGUE_PREDICTION_SIMULATIONS` (default `10000`)
