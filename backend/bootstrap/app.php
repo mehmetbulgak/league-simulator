@@ -19,8 +19,10 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        $exceptions->renderable(static function (FixturesAlreadyGeneratedException $e, $request) {
-            if (!$request->expectsJson()) {
+        $shouldReturnJson = static fn ($request): bool => $request->is('api/*') || $request->expectsJson();
+
+        $exceptions->renderable(static function (FixturesAlreadyGeneratedException $e, $request) use ($shouldReturnJson) {
+            if (!$shouldReturnJson($request)) {
                 return null;
             }
 
@@ -29,8 +31,8 @@ return Application::configure(basePath: dirname(__DIR__))
             ], Response::HTTP_CONFLICT);
         });
 
-        $exceptions->renderable(static function (InsufficientTeamsException $e, $request) {
-            if (!$request->expectsJson()) {
+        $exceptions->renderable(static function (InsufficientTeamsException $e, $request) use ($shouldReturnJson) {
+            if (!$shouldReturnJson($request)) {
                 return null;
             }
 
@@ -39,8 +41,8 @@ return Application::configure(basePath: dirname(__DIR__))
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         });
 
-        $exceptions->renderable(static function (TeamPowerLockedException $e, $request) {
-            if (!$request->expectsJson()) {
+        $exceptions->renderable(static function (TeamPowerLockedException $e, $request) use ($shouldReturnJson) {
+            if (!$shouldReturnJson($request)) {
                 return null;
             }
 
