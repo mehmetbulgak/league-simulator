@@ -31,7 +31,14 @@ COPY --from=frontend-build /app/backend/public/spa /app/backend/public/spa
 
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint
 RUN chmod +x /usr/local/bin/entrypoint \
-  && mkdir -p storage bootstrap/cache database \
+  && mkdir -p \
+    bootstrap/cache \
+    database \
+    storage/framework/cache/data \
+    storage/framework/sessions \
+    storage/framework/testing \
+    storage/framework/views \
+    storage/logs \
   && touch database/database.sqlite \
   && chown -R www-data:www-data storage bootstrap/cache database
 

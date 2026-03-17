@@ -8,7 +8,14 @@ if [ -z "${APP_KEY:-}" ]; then
   exit 1
 fi
 
-mkdir -p storage bootstrap/cache database
+mkdir -p \
+  bootstrap/cache \
+  database \
+  storage/framework/cache/data \
+  storage/framework/sessions \
+  storage/framework/testing \
+  storage/framework/views \
+  storage/logs
 touch database/database.sqlite
 
 php artisan package:discover --ansi
