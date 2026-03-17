@@ -92,11 +92,7 @@ final class SimulationService
                 ->all();
         }
 
-        $predictions = $teams->map(static fn (Team $team) => [
-            'teamId' => (int) $team->id,
-            'teamName' => (string) $team->name,
-            'percentage' => 0,
-        ])->values();
+        $predictions = [];
 
         if ($fixturesGenerated && $this->shouldComputePredictions($currentWeek, $totalWeeks) && $teams->isNotEmpty()) {
             $percentages = $this->championshipPredictor->predictChampionPercentages(
@@ -111,7 +107,7 @@ final class SimulationService
                     'teamName' => (string) $team->name,
                     'percentage' => (int) ($percentages[(int) $team->id] ?? 0),
                 ];
-            })->values();
+            })->values()->all();
         }
 
         return [

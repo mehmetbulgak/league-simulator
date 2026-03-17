@@ -11,7 +11,9 @@ defineProps({
 
 <template>
   <UiPanel title="Championship Predictions">
-    <div v-if="predictions.length === 0" class="muted">No predictions.</div>
+    <div v-if="predictions.length === 0" class="muted">
+      Predictions will appear from Week 4+ (last 3 weeks).
+    </div>
     <template v-else>
       <div v-for="p in predictions" :key="p.teamId" class="prediction-line">
         <span class="team">{{ p.teamName }}</span>
